@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drill Cepat TIU CPNS — Sesuai Kisi-Kisi</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-2: #273549;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 780px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .badge-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge.rank {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    /* Setup Screen */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .card h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .option-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill:hover { border-color: var(--accent); }
+
+    .pill.active {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .checkbox-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--accent);
+      color: #0f172a;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); }
+
+    /* Game Screen */
+    .hidden { display: none !important; }
+
+    .hud {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      background: var(--bg);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .hud-item { text-align: center; }
+
+    .hud-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hud-val {
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
+
+    .timer-danger { color: var(--danger); }
+
+    /* Power-ups Bar */
+    .powerup-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .powerup-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-power {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-power:hover:not(:disabled) {
+      background: var(--warning);
+      color: #0f172a;
+    }
+
+    .btn-power:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .category-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+
+    .question-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      line-height: 1.6;
+      font-size: 1.02rem;
+    }
+
+    .figural-stage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .figural-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #0f172a;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 13px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: #2f4058;
+    }
+
+    .opt-btn.eliminated {
+      opacity: 0.25;
+      pointer-events: none;
+      text-decoration: line-through;
+    }
+
+    .opt-key {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    .opt-btn.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: var(--success);
+    }
+
+    .opt-btn.wrong {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--danger);
+    }
+
+    .shortcut-hint {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Result Screen */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .stat-card .lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .review-list {
+      max-height: 280px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-right: 4px;
+    }
+
+    .review-item {
+      background: var(--bg);
+      border-left: 4px solid var(--danger);
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+    }
+
+    .review-item.ok { border-left-color: var(--success); }
+    .review-q { font-weight: 600; margin-bottom: 6px; }
+    .review-exp { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="title-group">
+      <h1>Drill Cepat TIU CPNS</h1>
+      <p>Latihan kecepatan & akurasi berbasis kisi-kisi SKD (Verbal, Numerik, Figural)</p>
+    </div>
+    <div class="badge-group">
+      <span class="badge rank" id="rank-badge">Pangkat: Calon Peserta</span>
+      <span class="badge" id="highscore-badge">Rekor: 0 Poin</span>
+    </div>
+  </div>
+
+  <!-- SCREEN 1: PENGATURAN -->
+  <div id="setup-screen">
+    <div class="grid-2">
+      <div class="card">
+        <h3>1. Durasi Sesi</h3>
+        <div class="option-pills" id="duration-pills">
+          <button class="pill" data-val="60">1 Menit (Sprint)</button>
+          <button class="pill active" data-val="180">3 Menit</button>
+          <button class="pill" data-val="300">5 Menit</button>
+          <button class="pill" data-val="600">10 Menit</button>
+        </div>
+
+        <h3 style="margin-top: 18px;">2. Mode Jawaban</h3>
+        <div class="option-pills" id="mode-pills">
+          <button class="pill active" data-val="instant">Langsung Lanjut (Cepat)</button>
+          <button class="pill" data-val="feedback">Cek Benar/Salah (0.6 dtk)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Kisi-Kisi Materi TIU</h3>
+        <div class="checkbox-list">
+          <label class="checkbox-item">
+            <input type="checkbox" class="cat-check" value="verbal_analogi" checked />
+            <span>Verbal — Analogi Kata</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="cat-check" value="verbal_silogisme" checked />
+            <span>Verbal — Silogisme & Analitis</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="cat-check" value="numerik_hitung" checked />
+            <span>Numerik — Berhitung & Perbandingan</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="cat-check" value="numerik_deret" checked />
+            <span>Numerik — Deret Angka</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="cat-check" value="numerik_cerita" checked />
+            <span>Numerik — Soal Cerita</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="cat-check" value="figural" checked />
+            <span>Figural — Pola & Ketidaksamaan</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="start-btn">Mulai Drill TIU Sekarang</button>
+  </div>
+
+  <!-- SCREEN 2: ARENA DRILL -->
+  <div id="game-screen" class="hidden">
+    <div class="hud">
+      <div class="hud-item">
+        <div class="hud-label">Sisa Waktu</div>
+        <div class="hud-val" id="hud-time">03:00</div>
+      </div>
+      <div class="hud-item">
+        <div class="hud-label">Skor TIU (+5)</div>
+        <div class="hud-val" id="hud-score" style="color: var(--success);">0</div>
+      </div>
+      <div class="hud-item">
+        <div class="hud-label">Combo Streak</div>
+        <div class="hud-val" id="hud-combo" style="color: var(--warning);">0x 🔥</div>
+      </div>
+      <div class="hud-item">
+        <div class="hud-label">Kecepatan</div>
+        <div class="hud-val" id="hud-pace">0.0 dtk/soal</div>
+      </div>
+    </div>
+
+    <div class="powerup-bar">
+      <span class="category-tag" id="q-category">NUMERIK — DERET ANGKA</span>
+      <div class="powerup-btns">
+        <button class="btn-power" id="btn-5050" title="Hapus 2 opsi salah">✂️ 50:50 (1x)</button>
+        <button class="btn-power" id="btn-time" title="Tambah waktu 10 detik">⏳ +10 Detik (1x)</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="question-box" id="q-text">Memuat soal...</div>
+      <div class="options-grid" id="options-container"></div>
+    </div>
+
+    <div class="shortcut-hint">
+      Shortcut Keyboard: Tekan <strong>A / B / C / D / E</strong> atau angka <strong>1–5</strong> untuk menjawab cepat • Tekan <strong>Esc</strong> untuk melewati soal
+    </div>
+  </div>
+
+  <!-- SCREEN 3: HASIL & PEMBAHASAN -->
+  <div id="result-screen" class="hidden">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num" id="res-score">0</div>
+        <div class="lbl">Total Skor TIU</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="res-acc">0%</div>
+        <div class="lbl">Akurasi</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="res-combo">0x</div>
+        <div class="lbl">Max Combo</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="res-correct">0/0</div>
+        <div class="lbl">Benar / Total</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 0.9rem; color: var(--muted); margin-bottom: 10px;">
+      Evaluasi & Pembahasan Singkat (Prioritas Soal Salah / Dilewati):
+    </h3>
+    <div class="review-list" id="review-list"></div>
+
+    <div style="display: flex; gap: 12px;">
+      <button class="btn-primary" id="restart-btn">Ulangi Drill</button>
+      <button class="btn-secondary" id="back-setup-btn">Ubah Kisi-Kisi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- STATE ---
+  let selectedDuration = 180;
+  let answerMode = 'instant';
+  let activeCategories = [];
+  let timerInterval = null;
+  let timeLeft = 180;
+  let elapsedSeconds = 0;
+  let score = 0;
+  let combo = 0;
+  let maxCombo = 0;
+  let correctCount = 0;
+  let totalAnswered = 0;
+  let currentQuestion = null;
+  let historyLog = [];
+  let isLocked = false;
+  let used5050 = false;
+  let usedTime = false;
+
+  const letters = ['A', 'B', 'C', 'D', 'E'];
+
+  function getRankName(pts) {
+    if (pts >= 175) return "Grandmaster TIU 🏆";
+    if (pts >= 120) return "Pejuang NIP ⭐";
+    if (pts >= 80) return "Lolos Passing Grade ✅";
+    if (pts >= 40) return "Analis Muda 📈";
+    return "Calon Peserta 🎯";
+  }
+
+  // Load High Score
+  const savedBest = parseInt(localStorage.getItem('tiu_cpns_best') || 0, 10);
+  document.getElementById('highscore-badge').textContent = `Rekor: ${savedBest} Poin`;
+  document.getElementById('rank-badge').textContent = `Pangkat: ${getRankName(savedBest)}`;
+
+  // --- SETUP PILLS ---
+  document.querySelectorAll('#duration-pills .pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#duration-pills .pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedDuration = parseInt(btn.dataset.val, 10);
+    });
+  });
+
+  document.querySelectorAll('#mode-pills .pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mode-pills .pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      answerMode = btn.dataset.val;
+    });
+  });
+
+  // --- BANK SOAL VERBAL & ANALITIS ---
+  const bankVerbalAnalogi = [
+    {
+      q: "INSOMNIA : TIDUR = ... : ...",
+      opts: ["Anemia : Darah", "Amnesia : Ingatan", "Disleksia : Bicara", "Fobia : Berani", "Hipertensi : Jantung"],
+      ans: 1,
+      exp: "Insomnia adalah gangguan kesulitan tidur, sebagaimana amnesia adalah gangguan kehilangan ingatan."
+    },
+    {
+      q: "KERTAS : RIM = ... : ...",
+      opts: ["Baju : Kodi", "Telur : Lusin", "Kayu : Batang", "Air : Liter", "Emas : Karat"],
+      ans: 0,
+      exp: "Satuan jumlah kolektif standar untuk kertas dalam jumlah besar adalah rim (500 lembar), sedangkan untuk pakaian/tekstil adalah kodi (20 potong)."
+    },
+    {
+      q: "HAKIM : PALU = ... : ...",
+      opts: ["Dokter : Resep", "Tentara : Senjata", "Koki : Wajan", "Pelukis : Kuas", "Guru : Kapur"],
+      ans: 3,
+      exp: "Palu adalah alat utama hakim saat mengetuk putusan sidang, sebagaimana kuas adalah alat utama pelukis berkarya."
+    },
+    {
+      q: "EPISTEMOLOGI : PENGETAHUAN = ... : ...",
+      opts: ["Etimologi : Kata", "Entomologi : Tumbuhan", "Etiologi : Cuaca", "Ekologi : Fosil", "Estetika : Logika"],
+      ans: 0,
+      exp: "Epistemologi adalah cabang ilmu tentang pengetahuan, sedangkan etimologi adalah cabang ilmu tentang asal-usul kata."
+    },
+    {
+      q: "ABRASI : PANTAI = ... : ...",
+      opts: ["Erosi : Tanah", "Reboisasi : Hutan", "Irigasi : Sawah", "Evaporasi : Laut", "Sedimentasi : Gunung"],
+      ans: 0,
+      exp: "Abrasi adalah pengikisan daratan di wilayah pantai oleh gelombang laut, sedangkan erosi adalah pengikisan lapisan tanah."
+    },
+    {
+      q: "KERING : LEMBAP = ... : ...",
+      opts: ["Terang : Gelap", "Panas : Hangat", "Cair : Beku", "Tinggi : Rendah", "Besar : Raksasa"],
+      ans: 1,
+      exp: "Tingkatan intensitas yang berdekatan: kering menuju lembap, sebagaimana panas menuju hangat."
+    },
+    {
+      q: "SUTRADARA : FILM = ... : ...",
+      opts: ["Konduktor : Orkestra", "Penyanyi : Konser", "Aktor : Panggung", "Penulis : Penerbit", "Kameramen : Lensa"],
+      ans: 0,
+      exp: "Sutradara memimpin dan mengarahkan jalannya pembuatan film, sedangkan konduktor memimpin dan mengarahkan pertunjukan orkestra."
+    }
+  ];
+
+  const bankVerbalSilogisme = [
+    {
+      q: "Semua ASN wajib menjunjung tinggi integritas. Sebagian peserta pelatihan adalah ASN. Kesimpulan yang paling tepat adalah...",
+      opts: [
+        "Semua peserta pelatihan wajib menjunjung tinggi integritas.",
+        "Sebagian peserta pelatihan wajib menjunjung tinggi integritas.",
+        "Sebagian ASN tidak mengikuti pelatihan.",
+        "Semua yang menjunjung tinggi integritas adalah ASN.",
+        "Tidak dapat ditarik kesimpulan."
+      ],
+      ans: 1,
+      exp: "Premis 1: Semua A adalah B. Premis 2: Sebagian C adalah A. Maka kesimpulan sahnya: Sebagian C adalah B."
+    },
+    {
+      q: "Jika anggaran daerah terserap optimal, maka pembangunan infrastruktur berjalan lancar. Pembangunan infrastruktur tidak berjalan lancar. Kesimpulannya adalah...",
+      opts: [
+        "Anggaran daerah terserap optimal.",
+        "Anggaran daerah tidak terserap optimal.",
+        "Sebagian anggaran dialihkan ke sektor lain.",
+        "Infrastruktur tidak membutuhkan anggaran.",
+        "Terjadi keterlambatan lelang proyek."
+      ],
+      ans: 1,
+      exp: "Modus Tollens: Jika P maka Q. Ternyata ~Q (tidak Q). Kesimpulan yang sah adalah ~P (Anggaran daerah tidak terserap optimal)."
+    },
+    {
+      q: "Tidak ada pegawai yang bekerja di lantai 4 pulang sebelum pukul 16.00. Raka adalah pegawai yang pulang pukul 15.30. Kesimpulannya...",
+      opts: [
+        "Raka bekerja di lantai 4.",
+        "Raka mendapat izin pulang cepat.",
+        "Raka bukan pegawai yang bekerja di lantai 4.",
+        "Sebagian pegawai lantai 4 pulang pukul 15.30.",
+        "Raka bekerja di lantai 3."
+      ],
+      ans: 2,
+      exp: "Karena syarat bekerja di lantai 4 adalah tidak pulang sebelum 16.00, dan Raka pulang pukul 15.30, maka Raka pasti bukan pegawai lantai 4."
+    },
+    {
+      q: "Lima pelari (P, Q, R, S, T) mengikuti lomba. P finis sebelum Q, tetapi di belakang R. S finis tepat di belakang Q, sedangkan T finis paling akhir. Urutan pelari dari yang tercepat adalah...",
+      opts: [
+        "R - P - Q - S - T",
+        "P - R - Q - S - T",
+        "R - Q - P - S - T",
+        "R - P - S - Q - T",
+        "P - Q - R - S - T"
+      ],
+      ans: 0,
+      exp: "R di depan P (R > P), P sebelum Q (P > Q), S tepat di belakang Q (Q > S), T terakhir. Urutan: R - P - Q - S - T."
+    },
+    {
+      q: "Jika hujan turun deras atau jalan utama banjir, maka distribusi logistik tertunda. Hari ini distribusi logistik tidak tertunda. Kesimpulan yang sah adalah...",
+      opts: [
+        "Hujan tidak turun deras tetapi jalan utama banjir.",
+        "Hujan turun deras namun jalan utama tidak banjir.",
+        "Hujan tidak turun deras dan jalan utama tidak banjir.",
+        "Distribusi logistik dialihkan ke jalur alternatif.",
+        "Hujan hanya turun rintik-rintik."
+      ],
+      ans: 2,
+      exp: "Negasi dari (P atau Q) adalah (~P dan ~Q). Karena akibat (~R) terjadi, maka kedua syarat penyebab tidak terjadi."
+    }
+  ];
+
+  const bankNumerikCerita = [
+    {
+      q: "Sebuah proyek pembangunan jalan dapat diselesaikan oleh 15 pekerja dalam waktu 24 hari. Jika proyek tersebut harus selesai dalam waktu 18 hari, berapa tambahan pekerja yang diperlukan?",
+      opts: ["4 orang", "5 orang", "6 orang", "8 orang", "20 orang"],
+      ans: 1,
+      exp: "Perbandingan berbalik nilai: 15 × 24 = P × 18 → P = 360 / 18 = 20 pekerja. Tambahan pekerja = 20 - 15 = 5 orang."
+    },
+    {
+      q: "Harga sebuah perangkat elektronik setelah mendapat diskon 20% adalah Rp2.400.000. Berapa harga awal perangkat tersebut sebelum diskon?",
+      opts: ["Rp2.800.000", "Rp2.880.000", "Rp3.000.000", "Rp3.200.000", "Rp2.900.000"],
+      ans: 2,
+      exp: "80% × Harga Awal = 2.400.000 → Harga Awal = 2.400.000 / 0,8 = Rp3.000.000."
+    },
+    {
+      q: "Rasio umur Andi dan Budi adalah 3 : 5. Jika selisih umur mereka adalah 12 tahun, berapakah jumlah umur mereka 2 tahun yang akan datang?",
+      opts: ["48 tahun", "50 tahun", "52 tahun", "54 tahun", "56 tahun"],
+      ans: 2,
+      exp: "Selisih rasio = 5 - 3 = 2 bagian = 12 tahun → 1 bagian = 6 tahun. Jumlah sekarang = (3+5)×6 = 48 tahun. Dua tahun lagi = 48 + 4 = 52 tahun."
+    },
+    {
+      q: "Sebuah kendaraan menempuh perjalanan dari Kota A ke Kota B dengan kecepatan rata-rata 60 km/jam selama 2 jam 30 menit. Jika perjalanan pulang ditempuh dalam waktu 2 jam, berapa kecepatan rata-rata saat pulang?",
+      opts: ["70 km/jam", "72 km/jam", "75 km/jam", "80 km/jam", "85 km/jam"],
+      ans: 2,
+      exp: "Jarak = 60 km/jam × 2,5 jam = 150 km. Kecepatan pulang = 150 km / 2 jam = 75 km/jam."
+    },
+    {
+      q: "Rata-rata nilai tes 8 peserta adalah 78. Ketika nilai 2 peserta susulan digabungkan, rata-ratanya menjadi 80. Berapa rata-rata nilai dari 2 peserta susulan tersebut?",
+      opts: ["84", "86", "88", "90", "92"],
+      ans: 2,
+      exp: "Total awal = 8 × 78 = 624. Total baru = 10 × 80 = 800. Selisih (2 peserta) = 800 - 624 = 176 → Rata-rata = 176 / 2 = 88."
+    }
+  ];
+
+  // --- GENERATOR SOAL DINAMIS ---
+  function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function shuffleWithAnswer(options, correctIdx) {
+    const tagged = options.map((val, idx) => ({ val, isCorrect: idx === correctIdx }));
+    for (let i = tagged.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tagged[i], tagged[j]] = [tagged[j], tagged[i]];
+    }
+    return {
+      opts: tagged.map(t => t.val),
+      ans: tagged.findIndex(t => t.isCorrect)
+    };
+  }
+
+  function generateNumerikHitung() {
+    const mode = randInt(1, 3);
+    if (mode === 1) {
+      const pctList = [15, 20, 25, 35, 40, 45, 60, 75];
+      const pct = pctList[randInt(0, pctList.length - 1)];
+      const base = randInt(4, 24) * 20;
+      const ansVal = (pct * base) / 100;
+      const rawOpts = [
+        `${ansVal}`,
+        `${ansVal + 10}`,
+        `${ansVal - 10 > 0 ? ansVal - 10 : ansVal + 15}`,
+        `${ansVal + 20}`,
+        `${Math.round(ansVal * 1.5)}`
+      ];
+      const shuf = shuffleWithAnswer(rawOpts, 0);
+      return {
+        cat: "NUMERIK — BERHITUNG CEPAT",
+        q: `Hasil dari <strong>${pct}% × ${base}</strong> adalah...`,
+        opts: shuf.opts,
+        ans: shuf.ans,
+        exp: `${pct}% × ${base} = (${pct}/100) × ${base} = ${ansVal}.`
+      };
+    } else if (mode === 2) {
+      const a = randInt(12, 25);
+      const b = randInt(12, 25);
+      const x = (a * a) - (b * b);
+      const y = ((a - b) * (a + b)) + randInt(-5, 5);
+      let correctText = "";
+      if (x > y) correctText = "X > Y";
+      else if (x < y) correctText = "X < Y";
+      else correctText = "X = Y";
+
+      const opts = ["X > Y", "X < Y", "X = Y", "X = 2Y", "Hubungan X dan Y tidak dapat ditentukan"];
+      return {
+        cat: "NUMERIK — PERBANDINGAN KUANTITATIF",
+        q: `Diketahui <strong>X = ${a}² - ${b}²</strong> dan <strong>Y = ${y}</strong>. Manakah hubungan yang benar antara kuantitas X dan Y?`,
+        opts: opts,
+        ans: opts.indexOf(correctText),
+        exp: `Gunakan sifat a² - b² = (a - b)(a + b) = (${a - b})(${a + b}) = ${x}. Dibandingkan Y = ${y}, maka ${correctText}.`
+      };
+    } else {
+      const xVal = randInt(4, 18);
+      const mult = randInt(3, 7);
+      const add = randInt(5, 25);
+      const total = (mult * xVal) + add;
+      const rawOpts = [`${xVal}`, `${xVal + 2}`, `${xVal - 2}`, `${xVal + 4}`, `${xVal + 1}`];
+      const shuf = shuffleWithAnswer(rawOpts, 0);
+      return {
+        cat: "NUMERIK — ALJABAR CEPAT",
+        q: `Jika <strong>${mult}x + ${add} = ${total}</strong>, maka nilai <strong>x</strong> adalah...`,
+        opts: shuf.opts,
+        ans: shuf.ans,
+        exp: `${mult}x = ${total} - ${add} = ${total - add} → x = ${total - add} / ${mult} = ${xVal}.`
+      };
+    }
+  }
+
+  function generateNumerikDeret() {
+    const patternType = randInt(1, 3);
+    if (patternType === 1) {
+      let start = randInt(2, 15);
+      let diff = randInt(2, 5);
+      let stepInc = randInt(1, 3);
+      const seq = [start];
+      for (let i = 0; i < 5; i++) {
+        start += diff;
+        seq.push(start);
+        diff += stepInc;
+      }
+      const nextVal = start + diff;
+      const rawOpts = [`${nextVal}`, `${nextVal + stepInc}`, `${nextVal - 2}`, `${nextVal + 4}`, `${nextVal - stepInc}`];
+      const shuf = shuffleWithAnswer(rawOpts, 0);
+      return {
+        cat: "NUMERIK — DERET ANGKA",
+        q: `Tentukan angka selanjutnya dari deret berikut:<br><strong>${seq.join(", ")}, ...</strong>`,
+        opts: shuf.opts,
+        ans: shuf.ans,
+        exp: `Pola selisih bertambah +${stepInc} di setiap suku. Selisih terakhir adalah +${diff}, sehingga suku berikutnya = ${start} + ${diff} = ${nextVal}.`
+      };
+    } else if (patternType === 2) {
+      let a = randInt(3, 12);
+      let stepA = randInt(3, 7);
+      let b = randInt(40, 80);
+      let stepB = randInt(4, 9);
+      const seq = [a, b, a + stepA, b - stepB, a + (2 * stepA), b - (2 * stepB)];
+      const nextVal = a + (3 * stepA);
+      const rawOpts = [`${nextVal}`, `${b - (3 * stepB)}`, `${nextVal + 2}`, `${nextVal - 3}`, `${seq[5] + stepA}`];
+      const shuf = shuffleWithAnswer(rawOpts, 0);
+      return {
+        cat: "NUMERIK — DERET ANGKA",
+        q: `Tentukan angka selanjutnya dari deret berikut:<br><strong>${seq.join(", ")}, ...</strong>`,
+        opts: shuf.opts,
+        ans: shuf.ans,
+        exp: `Pola lompat satu (2 larik): Larik ganjil selalu +${stepA} (${a}, ${a + stepA}, ${a + 2 * stepA}, ${nextVal}), larik genap selalu -${stepB}.`
+      };
+    } else {
+      let x = randInt(2, 6);
+      let y = randInt(3, 8);
+      const seq = [x, y];
+      for (let i = 2; i < 6; i++) {
+        seq.push(seq[i - 1] + seq[i - 2]);
+      }
+      const nextVal = seq[4] + seq[5];
+      const rawOpts = [`${nextVal}`, `${nextVal + 2}`, `${nextVal - 3}`, `${seq[5] * 2}`, `${nextVal + 5}`];
+      const shuf = shuffleWithAnswer(rawOpts, 0);
+      return {
+        cat: "NUMERIK — DERET ANGKA",
+        q: `Tentukan angka selanjutnya dari deret berikut:<br><strong>${seq.join(", ")}, ...</strong>`,
+        opts: shuf.opts,
+        ans: shuf.ans,
+        exp: `Pola Fibonacci (jumlah dua suku sebelumnya): ${seq[4]} + ${seq[5]} = ${nextVal}.`
+      };
+    }
+  }
+
+  function renderShapeSVG(sides, rotation, fillColor, innerDot) {
+    const size = 64;
+    const cx = 32, cy = 32, r = 22;
+    let shapeEl = "";
+
+    if (sides === 0) {
+      shapeEl = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" stroke="#0f172a" stroke-width="2.5"/>`;
+    } else {
+      const pts = [];
+      for (let i = 0; i < sides; i++) {
+        const angle = (((i * 360) / sides) - 90 + rotation) * (Math.PI / 180);
+        pts.push(`${(cx + r * Math.cos(angle)).toFixed(1)},${(cy + r * Math.sin(angle)).toFixed(1)}`);
+      }
+      shapeEl = `<polygon points="${pts.join(' ')}" fill="${fillColor}" stroke="#0f172a" stroke-width="2.5"/>`;
+    }
+
+    const dotEl = innerDot ? `<circle cx="${cx}" cy="${cy}" r="5" fill="#ef4444"/>` : "";
+    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${shapeEl}${dotEl}</svg>`;
+  }
+
+  function generateFigural() {
+    const mode = randInt(1, 2);
+    if (mode === 1) {
+      const startSides = randInt(3, 4);
+      const cards = [0, 1, 2].map(i => ({
+        svg: renderShapeSVG(startSides + i, i * 45, i % 2 === 0 ? "#e2e8f0" : "#38bdf8", i === 1),
+        label: `Gambar ${i + 1}`
+      }));
+
+      const correctDesc = `Segi-${startSides + 3}, rotasi 135°, berwarna biru, dengan titik merah di tengah`;
+      const rawOpts = [
+        correctDesc,
+        `Segi-${startSides + 3}, rotasi 135°, berwarna abu-abu, tanpa titik tengah`,
+        `Segi-${startSides + 2}, rotasi 90°, berwarna biru, dengan titik merah di tengah`,
+        `Lingkaran, rotasi 135°, berwarna biru, tanpa titik tengah`,
+        `Segi-${startSides + 4}, rotasi 180°, berwarna abu-abu, dengan titik merah di tengah`
+      ];
+      const shuf = shuffleWithAnswer(rawOpts, 0);
+
+      const stageHtml = `
+        <div>Perhatikan pola perubahan berurutan pada 3 gambar berikut. Manakah deskripsi yang paling tepat untuk <strong>Gambar 4</strong>?</div>
+        <div class="figural-stage">
+          ${cards.map(c => `<div class="figural-card">${c.svg}<span>${c.label}</span></div>`).join('')}
+          <div class="figural-card" style="width:76px;height:86px;justify-content:center;border:2px dashed #0f172a;">
+            <span style="font-size:1.4rem;">?</span><span>Gambar 4</span>
+          </div>
+        </div>
+      `;
+
+      return {
+        cat: "FIGURAL — SERIAL POLA GAMBAR",
+        q: stageHtml,
+        opts: shuf.opts,
+        ans: shuf.ans,
+        exp: `Jumlah sisi bertambah +1 tiap langkah (segi-${startSides} → segi-${startSides + 3}), warna selang-seling (abu-biru-abu-biru), dan titik merah muncul di posisi genap.`
+      };
+    } else {
+      const configs = [
+        { sides: 4, rot: 0, fill: "#38bdf8", dot: true, diff: false },
+        { sides: 5, rot: 0, fill: "#38bdf8", dot: true, diff: false },
+        { sides: 6, rot: 0, fill: "#38bdf8", dot: true, diff: false },
+        { sides: 3, rot: 0, fill: "#38bdf8", dot: true, diff: false },
+        { sides: 4, rot: 45, fill: "#38bdf8", dot: false, diff: true }
+      ];
+      for (let i = configs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [configs[i], configs[j]] = [configs[j], configs[i]];
+      }
+      const correctIdx = configs.findIndex(c => c.diff);
+      const stageHtml = `
+        <div>Pilih satu gambar (<strong>A, B, C, D, atau E</strong>) yang <strong>tidak memiliki kesamaan pola</strong> dengan empat gambar lainnya!</div>
+        <div class="figural-stage">
+          ${configs.map((c, idx) => `<div class="figural-card">${renderShapeSVG(c.sides, c.rot, c.fill, c.dot)}<span>Opsi ${letters[idx]}</span></div>`).join('')}
+        </div>
+      `;
+
+      return {
+        cat: "FIGURAL — KETIDAKSAMAAN GAMBAR",
+        q: stageHtml,
+        opts: letters.map(l => `Gambar Opsi ${l}`),
+        ans: correctIdx,
+        exp: `Empat gambar lainnya memiliki titik merah tepat di bagian tengah bangun datar, sedangkan Gambar Opsi ${letters[correctIdx]} tidak memiliki titik tengah.`
+      };
+    }
+  }
+
+  function pickNextQuestion() {
+    const cat = activeCategories[randInt(0, activeCategories.length - 1)];
+    if (cat === 'verbal_analogi') {
+      const item = bankVerbalAnalogi[randInt(0, bankVerbalAnalogi.length - 1)];
+      return { cat: "VERBAL — ANALOGI KATA", ...item };
+    }
+    if (cat === 'verbal_silogisme') {
+      const item = bankVerbalSilogisme[randInt(0, bankVerbalSilogisme.length - 1)];
+      return { cat: "VERBAL — SILOGISME & ANALITIS", ...item };
+    }
+    if (cat === 'numerik_hitung') return generateNumerikHitung();
+    if (cat === 'numerik_deret') return generateNumerikDeret();
+    if (cat === 'numerik_cerita') {
+      const item = bankNumerikCerita[randInt(0, bankNumerikCerita.length - 1)];
+      return { cat: "NUMERIK — SOAL CERITA", ...item };
+    }
+    return generateFigural();
+  }
+
+  // --- GAME LOOP & POWER-UPS ---
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function renderQuestion() {
+    isLocked = false;
+    currentQuestion = pickNextQuestion();
+    document.getElementById('q-category').textContent = currentQuestion.cat;
+    document.getElementById('q-text').innerHTML = currentQuestion.q;
+
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
+    currentQuestion.opts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.dataset.idx = idx;
+      btn.innerHTML = `<span class="opt-key">${letters[idx]}</span><span>${optText}</span>`;
+      btn.addEventListener('click', () => handleAnswer(idx));
+      container.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(selectedIndex) {
+    if (isLocked) return;
+    isLocked = true;
+
+    const isSkip = selectedIndex === -1;
+    const isCorrect = !isSkip && selectedIndex === currentQuestion.ans;
+
+    totalAnswered++;
+    if (isCorrect) {
+      correctCount++;
+      combo++;
+      if (combo > maxCombo) maxCombo = combo;
+      // Bonus +1 poin tiap kelipatan 3 combo
+      const comboBonus = combo >= 3 ? Math.floor(combo / 3) : 0;
+      score += (5 + comboBonus);
+    } else {
+      combo = 0;
+    }
+
+    historyLog.push({
+      q: currentQuestion.q.replace(/<[^>]*>?/gm, ' ').trim(),
+      userAns: isSkip ? 'Dilewati' : `${letters[selectedIndex]}. ${currentQuestion.opts[selectedIndex]}`,
+      correctAns: `${letters[currentQuestion.ans]}. ${currentQuestion.opts[currentQuestion.ans]}`,
+      isCorrect,
+      exp: currentQuestion.exp
+    });
+
+    updateHUD();
+
+    if (answerMode === 'instant') {
+      renderQuestion();
+    } else {
+      const buttons = document.querySelectorAll('.opt-btn');
+      buttons[currentQuestion.ans].classList.add('correct');
+      if (!isSkip && !isCorrect) {
+        buttons[selectedIndex].classList.add('wrong');
+      }
+      setTimeout(() => {
+        if (timeLeft > 0) renderQuestion();
+      }, 600);
+    }
+  }
+
+  function updateHUD() {
+    document.getElementById('hud-score').textContent = score;
+    document.getElementById('hud-combo').textContent = `${combo}x ${combo >= 3 ? '🔥' : ''}`;
+    const pace = totalAnswered > 0 ? (Math.max(1, elapsedSeconds) / totalAnswered).toFixed(1) : '0.0';
+    document.getElementById('hud-pace').textContent = `${pace} dtk/soal`;
+  }
+
+  // Power-Up 50:50
+  document.getElementById('btn-5050').addEventListener('click', () => {
+    if (used5050 || isLocked) return;
+    used5050 = true;
+    const btn5050 = document.getElementById('btn-5050');
+    btn5050.disabled = true;
+    btn5050.textContent = "✂️ 50:50 (Terpakai)";
+
+    const wrongIndices = [0, 1, 2, 3, 4].filter(i => i !== currentQuestion.ans);
+    for (let i = wrongIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [wrongIndices[i], wrongIndices[j]] = [wrongIndices[j], wrongIndices[i]];
+    }
+    const toEliminate = wrongIndices.slice(0, 2);
+    const buttons = document.querySelectorAll('.opt-btn');
+    toEliminate.forEach(idx => buttons[idx].classList.add('eliminated'));
+  });
+
+  // Power-Up +10 Detik
+  document.getElementById('btn-time').addEventListener('click', () => {
+    if (usedTime) return;
+    usedTime = true;
+    const btnTime = document.getElementById('btn-time');
+    btnTime.disabled = true;
+    btnTime.textContent = "⏳ +10 Detik (Terpakai)";
+    timeLeft += 10;
+    const timeEl = document.getElementById('hud-time');
+    timeEl.textContent = formatTime(timeLeft);
+    if (timeLeft > 15) timeEl.classList.remove('timer-danger');
+  });
+
+  function startGame() {
+    activeCategories = Array.from(document.querySelectorAll('.cat-check:checked')).map(c => c.value);
+    if (activeCategories.length === 0) {
+      alert('Pilih minimal 1 kisi-kisi materi TIU terlebih dahulu.');
+      return;
+    }
+
+    timeLeft = selectedDuration;
+    elapsedSeconds = 0;
+    score = 0;
+    combo = 0;
+    maxCombo = 0;
+    correctCount = 0;
+    totalAnswered = 0;
+    historyLog = [];
+    used5050 = false;
+    usedTime = false;
+
+    const btn5050 = document.getElementById('btn-5050');
+    btn5050.disabled = false;
+    btn5050.textContent = "✂️ 50:50 (1x)";
+
+    const btnTime = document.getElementById('btn-time');
+    btnTime.disabled = false;
+    btnTime.textContent = "⏳ +10 Detik (1x)";
+
+    document.getElementById('setup-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+
+    const timeEl = document.getElementById('hud-time');
+    timeEl.textContent = formatTime(timeLeft);
+    timeEl.classList.remove('timer-danger');
+    updateHUD();
+    renderQuestion();
+
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      elapsedSeconds++;
+      timeEl.textContent = formatTime(timeLeft);
+      if (timeLeft <= 15) timeEl.classList.add('timer-danger');
+      if (timeLeft <= 0) {
+        endGame();
+      }
+    }, 1000);
+  }
+
+  function endGame() {
+    clearInterval(timerInterval);
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
+
+    const currentBest = parseInt(localStorage.getItem('tiu_cpns_best') || 0, 10);
+    if (score > currentBest) {
+      localStorage.setItem('tiu_cpns_best', score);
+      document.getElementById('highscore-badge').textContent = `Rekor: ${score} Poin`;
+      document.getElementById('rank-badge').textContent = `Pangkat: ${getRankName(score)}`;
+    }
+
+    const acc = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+
+    document.getElementById('res-score').textContent = score;
+    document.getElementById('res-acc').textContent = `${acc}%`;
+    document.getElementById('res-combo').textContent = `${maxCombo}x`;
+    document.getElementById('res-correct').textContent = `${correctCount}/${totalAnswered}`;
+
+    const reviewEl = document.getElementById('review-list');
+    reviewEl.innerHTML = '';
+
+    const sorted = [...historyLog].sort((a, b) => Number(a.isCorrect) - Number(b.isCorrect));
+
+    if (sorted.length === 0) {
+      reviewEl.innerHTML = '<div class="review-item">Belum ada soal yang dijawab pada sesi ini.</div>';
+      return;
+    }
+
+    sorted.forEach(item => {
+      const div = document.createElement('div');
+      div.className = `review-item ${item.isCorrect ? 'ok' : ''}`;
+      div.innerHTML = `
+        <div class="review-q">${item.isCorrect ? '✅' : '❌'} ${item.q}</div>
+        <div>Jawabanmu: <strong>${item.userAns}</strong> • Kunci: <strong style="color:var(--success);">${item.correctAns}</strong></div>
+        <div class="review-exp">Pembahasan: ${item.exp}</div>
+      `;
+      reviewEl.appendChild(div);
+    });
+  }
+
+  // --- KEYBOARD SHORTCUTS ---
+  document.addEventListener('keydown', (e) => {
+    if (document.getElementById('game-screen').classList.contains('hidden')) return;
+    const key = e.key.toUpperCase();
+    const map = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, '1': 0, '2': 1, '3': 2, '4': 3, '5': 4 };
+    if (key in map) {
+      const btn = document.querySelector(`.opt-btn[data-idx="${map[key]}"]`);
+      if (btn && !btn.classList.contains('eliminated')) {
+        handleAnswer(map[key]);
+      }
+    } else if (e.key === 'Escape') {
+      handleAnswer(-1);
+    }
+  });
+
+  document.getElementById('start-btn').addEventListener('click', startGame);
+  document.getElementById('restart-btn').addEventListener('click', startGame);
+  document.getElementById('back-setup-btn').addEventListener('click', () => {
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('setup-screen').classList.remove('hidden');
+  });
+</script>
+</body>
+</html>
